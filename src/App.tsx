@@ -1,3 +1,4 @@
+import Layout from 'components/common/Layout';
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
@@ -62,7 +63,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      Hello
+      <Layout />
     </>
   );
 }
