@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
+import { Outlet } from 'react-router-dom';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -13,6 +14,9 @@ const LayoutContainer = styled.div`
   }
 
   & > main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 1;
   }
 
@@ -29,7 +33,9 @@ const Layout = () => {
     <LayoutContainer>
       <Header />
 
-      <main>Hello Crypto Tracker!</main>
+      <main>
+        <Outlet />
+      </main>
 
       <Footer />
     </LayoutContainer>

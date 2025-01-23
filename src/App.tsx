@@ -1,6 +1,6 @@
-import Layout from 'components/common/Layout';
-import React from 'react';
+import { RouterProvider } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
+import router from 'router';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -63,7 +63,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Layout />
+      <RouterProvider router={router} />
     </>
   );
 }

@@ -1,9 +1,16 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
   & > ul {
     display: flex;
-    gap: 5px;
+    gap: 10px;
+
+    > li {
+      &:hover {
+        color: #6262ff;
+      }
+    }
   }
 `;
 
@@ -12,10 +19,10 @@ const Header = () => {
     <HeaderContainer className='header'>
       <ul>
         <li>
-          <button>Home</button>
+          <Link to='/'>Home</Link>
         </li>
         <li>
-          <button>Coin</button>
+          <Link to='/coin'>Coin</Link>
         </li>
       </ul>
     </HeaderContainer>
