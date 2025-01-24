@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { getCoinDetail } from 'apis/coin';
-import Loading from 'components/common/Loading';
 import { useLocation, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
+import { getCoinDetail, getCoinPrice } from 'apis/coin';
+import Loading from 'components/common/Loading';
 
 interface IInfo {
   id: string;
@@ -26,6 +26,39 @@ interface IInfo {
   last_data_at: string;
 }
 
+interface IPrice {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  total_supply: number;
+  max_supply: number;
+  beta_value: number;
+  first_data_at: string;
+  last_updated: string;
+  quotes: {
+    USD: {
+      price: number;
+      volume_24h: number;
+      volume_24h_change_24h: number;
+      market_cap: number;
+      market_cap_change_24h: number;
+      percent_change_15m: number;
+      percent_change_30m: number;
+      percent_change_1h: number;
+      percent_change_6h: number;
+      percent_change_12h: number;
+      percent_change_24h: number;
+      percent_change_7d: number;
+      percent_change_30d: number;
+      percent_change_1y: number;
+      ath_price: number;
+      ath_date: string;
+      percent_from_price_ath: number;
+    };
+  };
+}
+
 const SubTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
@@ -36,7 +69,7 @@ const SubTitle = styled.h3`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 10px 20px;
   border-radius: 10px;
   margin-top: 10px;
@@ -68,13 +101,17 @@ const CoinDetail = () => {
     queryFn: () => getCoinDetail(coinId),
   });
 
-  console.log(coinInfo);
+  const { isLoading: isLoadingPriceInfo, data: priceInfo } = useQuery<IPrice>({
+    queryKey: ['coinPriceInfo', coinId],
+    queryFn: () => getCoinPrice(coinId),
+    refetchInterval: 10000,
+  });
 
   return (
     <div>
       <SubTitle>{state?.name || coinInfo?.name || ''}</SubTitle>
 
-      {!isLoadingCoinInfo ? (
+      {!isLoadingCoinInfo || !isLoadingPriceInfo ? (
         <>
           <Overview>
             <OverviewItem>
@@ -88,12 +125,24 @@ const CoinDetail = () => {
             </OverviewItem>
 
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{coinInfo?.open_source ? 'Yes' : 'No'}</span>
+              <span>Price:</span>
+              <span>${priceInfo?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
 
           <Description>{coinInfo?.description}</Description>
+
+          <Overview>
+            <OverviewItem>
+              <span>Total Suply:</span>
+              <span>{priceInfo?.total_supply}</span>
+            </OverviewItem>
+
+            <OverviewItem>
+              <span>Max Supply:</span>
+              <span>{priceInfo?.max_supply}</span>
+            </OverviewItem>
+          </Overview>
         </>
       ) : (
         <Loading />

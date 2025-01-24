@@ -9,3 +9,9 @@ export const getCoinDetail = (coinId: string) => {
     resposne.json()
   );
 };
+
+export const getCoinPrice = (coinId: string) => {
+  return fetch(`${BASE_URL}/tickers/${coinId}`).then((response) =>
+    response.json()
+  );
+};
