@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { getCoinDetail, getCoinPrice } from 'apis/coin';
@@ -69,7 +69,7 @@ const SubTitle = styled.h3`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #dcdde1;
   padding: 10px 20px;
   border-radius: 10px;
   margin-top: 10px;
@@ -90,6 +90,33 @@ const OverviewItem = styled.div`
 
 const Description = styled.p`
   margin: 20px 0px;
+`;
+
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: #dcdde1;
+  padding: 7px 0px;
+  border-radius: 10px;
+  color: ${(props) => props.theme.textColor} a {
+    display: block;
+  }
+`;
+
+const TabNavLink = styled(NavLink)`
+  &.active {
+    font-weight: 700;
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 const CoinDetail = () => {
@@ -143,6 +170,18 @@ const CoinDetail = () => {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+
+          <Tabs>
+            <Tab>
+              <TabNavLink to={`chart`}>Chart</TabNavLink>
+            </Tab>
+
+            <Tab>
+              <TabNavLink to={`price`}>Price</TabNavLink>
+            </Tab>
+          </Tabs>
+
+          <Outlet context={{ coinId }} />
         </>
       ) : (
         <Loading />

@@ -5,6 +5,8 @@ import ErrorPage from 'pages/Error';
 import CoinPage from 'pages/Coin';
 import CoinList from 'components/coin/List';
 import CoinDetail from 'components/coin/Detail';
+import CoinChart from 'components/coin/Chart';
+import CoinPrice from 'components/coin/Price';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,14 @@ const router = createBrowserRouter([
         element: <CoinPage />,
         children: [
           { path: '', element: <CoinList /> },
-          { path: ':coinId', element: <CoinDetail /> },
+          {
+            path: ':coinId',
+            element: <CoinDetail />,
+            children: [
+              { path: 'chart', element: <CoinChart /> },
+              { path: 'price', element: <CoinPrice /> },
+            ],
+          },
         ],
       },
     ],
