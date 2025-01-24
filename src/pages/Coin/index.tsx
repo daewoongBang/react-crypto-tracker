@@ -1,4 +1,4 @@
-import CoinList from 'components/coin/List';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Title = styled.div`
@@ -11,9 +11,9 @@ const Title = styled.div`
 const CoinPage = () => {
   return (
     <div>
-      <Title>Coin List</Title>
+      <Title>Coin</Title>
 
-      <CoinList />
+      <Outlet />
     </div>
   );
 };

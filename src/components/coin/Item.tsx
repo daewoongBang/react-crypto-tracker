@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ICoinItemProps {
@@ -7,13 +8,17 @@ interface ICoinItemProps {
 }
 
 const Item = styled.li`
-  display: flex;
-  align-items: center;
   background-color: #ecebeb;
   color: #313131;
   margin-bottom: 10px;
   border-radius: 15px;
-  padding: 20px;
+
+  a {
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease-in;
+    padding: 20px;
+  }
 `;
 
 const Img = styled.img`
@@ -25,12 +30,14 @@ const Img = styled.img`
 const CoinItem = ({ id, name, symbol }: ICoinItemProps) => {
   return (
     <Item>
-      <Img
-        src={`https://static.coinpaprika.com/coin/${id}/logo.png`}
-        alt={symbol}
-      />
+      <Link to={`${id}`} state={{ name }}>
+        <Img
+          src={`https://static.coinpaprika.com/coin/${id}/logo.png`}
+          alt={symbol}
+        />
 
-      <span>{name}</span>
+        <span>{name}</span>
+      </Link>
     </Item>
   );
 };
