@@ -8,8 +8,8 @@ interface ICoinItemProps {
 }
 
 const Item = styled.li`
-  background-color: #ecebeb;
-  color: #313131;
+  background-color: ${(props) => props.theme.subColor};
+  color: ${(props) => props.theme.mainColor};
   margin-bottom: 10px;
   border-radius: 15px;
 

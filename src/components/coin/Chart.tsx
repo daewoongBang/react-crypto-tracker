@@ -3,6 +3,8 @@ import { useOutletContext } from 'react-router-dom';
 import { getCoinHistory } from 'apis/coin';
 import Chart from 'react-apexcharts';
 import Loading from 'components/common/Loading';
+import { useAtomValue } from 'jotai';
+import { isDarkModeAtom } from 'state/theme';
 
 interface IOutletProps {
   coinId: string;
@@ -22,6 +24,8 @@ interface ICoinHistory {
 const CoinChart = () => {
   const { coinId } = useOutletContext<IOutletProps>();
 
+  const isDarkMode = useAtomValue(isDarkModeAtom);
+
   const { isLoading, data } = useQuery<ICoinHistory[]>({
     queryKey: ['coinHistory', coinId],
     queryFn: () => getCoinHistory(coinId),
@@ -30,16 +34,19 @@ const CoinChart = () => {
   return !isLoading ? (
     <div>
       <Chart
-        type='line'
+        type='candlestick'
         series={[
           {
-            name: 'price',
-            data: data?.map((price) => Number(price.close)) || [],
+            data:
+              data?.map((price) => ({
+                x: price.time_close,
+                y: [price.open, price.high, price.low, price.close],
+              })) || [],
           },
         ]}
         options={{
           theme: {
-            mode: 'light',
+            mode: isDarkMode ? 'dark' : 'light',
           },
           chart: {
             width: 500,

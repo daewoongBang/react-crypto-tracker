@@ -11,7 +11,7 @@ const Title = styled.div`
 const CoinPage = () => {
   return (
     <div>
-      <Title>Coin</Title>
+      <Title>Coins</Title>
 
       <Outlet />
     </div>

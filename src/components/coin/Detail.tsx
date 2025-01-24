@@ -62,14 +62,14 @@ interface IPrice {
 const SubTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
-  color: #5d5d5d;
+  color: ${(props) => props.theme.subColor};
   text-align: center;
 `;
 
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #dcdde1;
+  background-color: ${(props) => props.theme.subColor};
   padding: 10px 20px;
   border-radius: 10px;
   margin-top: 10px;
@@ -79,6 +79,7 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: ${(props) => props.theme.mainColor};
 
   span:first-child {
     font-size: 10px;
@@ -104,10 +105,11 @@ const Tab = styled.span`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: #dcdde1;
+  background-color: ${(props) => props.theme.subColor};
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props) => props.theme.textColor} a {
+  color: ${(props) => props.theme.mainColor};
+  a {
     display: block;
   }
 `;

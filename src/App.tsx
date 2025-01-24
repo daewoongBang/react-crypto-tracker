@@ -2,7 +2,9 @@ import { RouterProvider } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import router from 'router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { lightTheme } from 'theme';
+import { useAtomValue } from 'jotai';
+import { darkTheme, lightTheme } from 'theme';
+import { isDarkModeAtom } from 'state/theme';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -35,6 +37,8 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
   body {
+    background-color:${(props) => props.theme.mainColor};
+    color:${(props) => props.theme.subColor};
     line-height: 1;
   }
   menu, ol, ul {
@@ -64,8 +68,10 @@ const GlobalStyle = createGlobalStyle`
 const queryClient = new QueryClient();
 
 function App() {
+  const isDarkMode = useAtomValue(isDarkModeAtom);
+
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
         <RouterProvider router={router} />
